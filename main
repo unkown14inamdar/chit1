@@ -1,0 +1,3362 @@
+Q1.Implement a list library (doublylist.h) for a doubly linked list of integers
+with the create, display operations. Write a menu driven programto call
+these operations. [10]Dobulylist.h
+#ifndef DOUBLYLIST_H
+#define DOUBLYLIST_H
+typedef struct Node {
+int data;
+struct Node* next;
+struct Node* prev;
+} Node;
+typedef struct DoublyList {
+Node* head;
+Node* tail;
+} DoublyList;
+DoublyList* createDoublyList();
+void insertAtEnd(DoublyList* list, int data);
+void displayList(DoublyList* list);
+#endif // DOUBLYLIST_H
+doublylist.c
+#include "doublylist.h" #include <stdio.h>
+#include <stdlib.h>
+DoublyList* createDoublyList() {
+DoublyList* list = (DoublyList*)malloc(sizeof(DoublyList));
+if (list) {
+list->head = NULL;
+list->tail = NULL;
+}
+return list;
+}
+void insertAtEnd(DoublyList* list, int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (!newNode) {
+printf("Memory allocation failed.\n");
+return;
+}
+newNode->data = data;
+newNode->next = NULL;
+if (!list->head) {
+newNode->prev = NULL;
+list->head = newNode;
+list->tail = newNode;
+} else {
+newNode->prev = list->tail;
+list->tail->next = newNode;
+list->tail = newNode;
+}
+}
+void displayList(DoublyList* list) {
+Node* current = list->head;
+if (!current) {
+printf("The list is empty.\n");
+return;
+}
+printf("Doubly Linked List: ");
+while (current) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+int main() {
+DoublyList* list = createDoublyList();
+int choice, data;
+do {
+printf("\nDoubly Linked List Menu\n");
+printf("1. Insert an element\n");
+printf("2. Display List\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter the element to insert: ");
+scanf("%d", &data);
+insertAtEnd(list, data);
+printf("Element inserted successfully.\n");
+break;
+case 2:
+displayList(list);
+break;
+case 3:
+printf("Exiting program.\n");
+break;
+default:
+printf("Invalid choice. Please try again.\n");
+}
+} while (choice != 3);
+return 0;
+}
+Q2. Write a program that sorts the elements of linked list using any of sortingtechnique. [20]#include <stdio.h>
+#include <stdlib.h>
+// Define a structure for a linked list node
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode) {
+newNode->data = data;
+newNode->next = NULL;
+}
+return newNode;
+}
+// Function to insert a node at the end of the linked list
+void insertAtEnd(Node** head, int data) {
+Node* newNode = createNode(data);
+if (!newNode) {
+printf("Memory allocation failed.\n");
+return;
+}
+if (*head == NULL) {
+*head = newNode;
+} else {
+Node* current = *head;
+while (current->next != NULL) {
+current = current->next;
+}
+current->next = newNode;
+}
+}
+// Function to display the linked list
+void displayList(Node* head) {
+Node* current = head;
+while (current != NULL) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+// Function to sort the linked list using the bubble sort algorithmvoid bubbleSort(Node* head) {
+Node* current;
+Node* next;
+int temp;
+int swapped;
+if (head == NULL)
+return;
+do {
+swapped = 0;
+current = head;
+while (current->next != NULL) {
+next = current->next;
+if (current->data > next->data) {
+temp = current->data;
+current->data = next->data;
+next->data = temp;
+swapped = 1;
+}
+current = current->next;
+}
+} while (swapped);
+}
+int main() {
+Node* head = NULL;
+int n, data;
+printf("Enter the number of elements in the linked list: ");
+scanf("%d", &n);
+for (int i = 0; i < n; i++) {
+printf("Enter element %d: ", i + 1);
+scanf("%d", &data);
+insertAtEnd(&head, data);
+}
+printf("Original Linked List: ");
+displayList(head);
+bubbleSort(head);
+printf("Sorted Linked List: ");
+displayList(head);
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a list library (singlylist.h) for a singly linked list of integer
+with the operations create, display. Write a menu driven programto call
+these operations [10]
+Singlylist.h
+#ifndef SINGLYLIST_H
+#define SINGLYLIST_H
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+typedef struct SinglyList {
+Node* head;
+} SinglyList;
+singlyList* createSinglyList();
+void insertAtEnd(SinglyList* list, int data);
+void displayList(SinglyList* list);
+#endif // SINGLYLIST_H
+singlylist.c
+#include "Singlylist.h" #include <stdio.h>
+#include <stdlib.h>
+SinglyList* createSinglyList() {
+SinglyList* list = (SinglyList*)malloc(sizeof(SinglyList));
+if (list) {
+list->head = NULL;
+}
+return list;
+}
+void insertAtEnd(SinglyList* list, int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (!newNode) {
+printf("Memory allocation failed.\n");
+return;
+}
+newNode->data = data;
+newNode->next = NULL;
+if (!list->head) {
+list->head = newNode;
+} else {
+Node* current = list->head;
+while (current->next != NULL) {
+current = current->next;
+}
+current->next = newNode;
+}
+}
+void displayList(SinglyList* list) {
+Node* current = list->head;
+if (!current) {
+printf("The list is empty.\n");
+return;
+}
+printf("Singly Linked List: ");
+while (current) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+int main() {
+SinglyList* list = createSinglyList();
+int choice, data;
+do {
+printf("\nSingly Linked List Menu\n");
+printf("1. Insert an element\n");
+printf("2. Display List\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter the element to insert: ");
+scanf("%d", &data);
+insertAtEnd(list, data);
+printf("Element inserted successfully.\n");
+break;
+case 2:
+displayList(list);
+break;
+case 3:
+printf("Exiting program.\n");
+break;
+default:
+printf("Invalid choice. Please try again.\n");
+}
+} while (choice != 3);
+return 0;
+}
+Q2. Write a program that copies the contents of one stack into another. Usestack library to perform basic stack operations. The order of two stacks
+must be identical.(Hint: Use a temporary stack to preserve the order). [20]
+stack.h
+#ifndef STACK_H
+#define STACK_H
+typedef struct Stack {
+int* items;
+int top;
+int max_size;
+} Stack;
+Stack* createStack(int max_size);
+int isEmpty(Stack* stack);
+int isFull(Stack* stack);
+void push(Stack* stack, int item);
+int pop(Stack* stack);
+void destroyStack(Stack* stack);
+#endif // STACK_H
+stack.c
+#include "stack.h" #include <stdlib.h>
+Stack* createStack(int max_size) {
+Stack* stack = (Stack*)malloc(sizeof(Stack));
+stack->items = (int*)malloc(max_size * sizeof(int));
+stack->top = -1;
+stack->max_size = max_size;
+return stack;
+}
+int isEmpty(Stack* stack) {
+return stack->top == -1;
+}
+int isFull(Stack* stack) {
+return stack->top == stack->max_size - 1;
+}
+void push(Stack* stack, int item) {
+if (!isFull(stack)) {
+stack->items[++stack->top] = item;
+}
+}
+int pop(Stack* stack) {
+if (!isEmpty(stack)) {
+return stack->items[stack->top--];
+}
+return -1; // Return a sentinel value for an empty stack
+}
+void destroyStack(Stack* stack) {
+free(stack->items);
+free(stack);
+}
+int main() {
+int max_size = 100; // Max size for the stacks
+Stack* sourceStack = createStack(max_size);
+Stack* destinationStack = createStack(max_size);
+Stack* tempStack = createStack(max_size);
+// Push elements onto the source stack
+for (int i = 1; i <= 5; i++) {
+push(sourceStack, i * 10);
+}
+printf("Source Stack: ");
+while (!isEmpty(sourceStack)) {
+int item = pop(sourceStack);
+printf("%d ", item);
+// Push the item into the temporary stack to preserve order
+push(tempStack, item);
+}
+printf("\n");
+// Copy the contents from the temporary stack back to the source stack
+while (!isEmpty(tempStack)) {
+int item = pop(tempStack);
+push(sourceStack, item);
+}
+// Copy the contents from the source stack to the destination stack while
+preserving order
+while (!isEmpty(sourceStack)) {
+int item = pop(sourceStack);
+// Push the item into the temporary stack to preserve order
+push(tempStack, item);
+// Push the item into the destination stack
+push(destinationStack, item);
+}
+// Copy the contents from the temporary stack back to the source stack
+while (!isEmpty(tempStack)) {
+int item = pop(tempStack);
+push(sourceStack, item);
+}
+printf("Destination Stack (Copied): ");
+while (!isEmpty(destinationStack)) {
+int item = pop(destinationStack);
+printf("%d ", item);
+// Push the item into the temporary stack to preserve order
+push(tempStack, item);
+}
+printf("\n");
+// Cleanup
+destroyStack(sourceStack);
+destroyStack(destinationStack); destroyStack(tempStack); return 0; }Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using insertion sort algorithm. [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+void insertionSort(int arr[], int n) {
+int i, key, j;
+for (i = 1; i < n; i++) {
+key = arr[i];
+j = i - 1;
+while (j >= 0 && arr[j] > key) {
+arr[j + 1] = arr[j];
+j = j - 1;
+}
+arr[j + 1] = key;
+}
+}
+int main() {
+int n;
+srand(time(0)); // Seed for random number generation
+printf("Enter the number of elements in the array: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid array size. Please enter a positive integer.\n");
+return 1;
+}
+int *arr = (int *)malloc(n * sizeof(int));
+if (arr == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+// Populate the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Generates random integers between 0 and 99}
+printf("Unsorted Array: ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+insertionSort(arr, n);
+printf("Sorted Array (Ascending Order): ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+free(arr); // Free the dynamically allocated memory
+return 0;
+}
+Q2. Write a C program to evaluate postfix expression. [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#define MAX_STACK_SIZE 100
+// Structure to represent a stack
+typedef struct {
+int items[MAX_STACK_SIZE];
+int top;
+} Stack;
+// Initialize the stack
+void initialize(Stack *stack) {
+stack->top = -1;
+}
+// Check if the stack is empty
+int isEmpty(Stack *stack) {
+return stack->top == -1;
+}
+// Check if the stack is full
+int isFull(Stack *stack) {
+return stack->top == MAX_STACK_SIZE - 1;
+}
+// Push an item onto the stack
+void push(Stack *stack, int item) {
+if (!isFull(stack)) {
+stack->items[++stack->top] = item;
+} else {
+printf("Stack overflow\n");
+exit(1);
+}
+}
+// Pop an item from the stack
+int pop(Stack *stack) {
+if (!isEmpty(stack)) {
+return stack->items[stack->top--];
+} else {
+printf("Stack underflow\n");
+exit(1);
+}
+}
+// Evaluate the postfix expression
+int evaluatePostfix(char *expression) {
+Stack stack;
+initialize(&stack);
+int len = strlen(expression);
+for (int i = 0; i < len; i++) {
+char token = expression[i];
+if (isdigit(token)) {
+push(&stack, token - '0'); // Convert character to integer and push tostack} else {
+int operand2 = pop(&stack);
+int operand1 = pop(&stack);
+switch (token) {
+case '+':
+push(&stack, operand1 + operand2);
+break;
+case '-':
+push(&stack, operand1 - operand2);
+break;
+case '*':
+push(&stack, operand1 * operand2);
+break;
+case '/':
+push(&stack, operand1 / operand2);
+break;
+}
+}
+}
+return pop(&stack);
+}
+int main() {
+char expression[100];
+printf("Enter a postfix expression: ");
+scanf("%s", expression);
+int result = evaluatePostfix(expression);
+printf("Result: %d\n", result);
+return 0;
+}Q3. Viva [5]
+Q1. Read the ‘n’ numbers from user and sort using bubble sort. [10]#include <stdio.h>
+void bubbleSort(int arr[], int n) {
+for (int i = 0; i < n - 1; i++) {
+int swapped = 0; // To optimize by checking if any swaps were made intheinner loop
+for (int j = 0; j < n - i - 1; j++) {
+if (arr[j] > arr[j + 1]) {
+// Swap arr[j] and arr[j+1]
+int temp = arr[j];
+arr[j] = arr[j + 1];
+arr[j + 1] = temp;
+swapped = 1;
+}
+}
+if (swapped == 0) {
+// If no two elements were swapped in the inner loop, the array is alreadysorted
+break;
+}
+}
+}
+int main() {
+int n;
+printf("Enter the number of elements: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid array size. Please enter a positive integer.\n");
+return 1;
+}
+int arr[n];
+printf("Enter %d numbers:\n", n);
+for (int i = 0; i < n; i++) {
+scanf("%d", &arr[i]);
+}
+printf("Original Array: ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+bubbleSort(arr, n);
+printf("Sorted Array (Ascending Order): ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+return 0;
+}
+Q2. Write a program to reverse the elements of a queue using queue library. Implement basic queue operations init, enqueue, dequeue. [20]
+#include <stdio.h>
+#include <stdbool.h>
+#define MAX_QUEUE_SIZE 100
+typedef struct {
+int data[MAX_QUEUE_SIZE];
+int front;
+int rear;
+} Queue;
+// Initialize the queue
+void initQueue(Queue *q) {
+q->front = -1;
+q->rear = -1;
+}
+// Check if the queue is empty
+bool isEmpty(Queue *q) {
+return q->front == -1;
+}
+// Check if the queue is full
+bool isFull(Queue *q) {
+return (q->rear + 1) % MAX_QUEUE_SIZE == q->front;
+}
+// Enqueue an element into the queue
+void enqueue(Queue *q, int item) {
+if (isFull(q)) {
+printf("Queue is full. Cannot enqueue.\n");
+return;
+}
+if (isEmpty(q)) {
+q->front = 0;
+}
+q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
+q->data[q->rear] = item;
+}
+// Dequeue an element from the queue
+int dequeue(Queue *q) {
+if (isEmpty(q)) {
+printf("Queue is empty. Cannot dequeue.\n");
+return -1; // Return a sentinel value for an empty queue
+}
+int item = q->data[q->front];
+if (q->front == q->rear) {
+// The last element is being dequeued
+q->front = -1;
+q->rear = -1;
+} else {
+q->front = (q->front + 1) % MAX_QUEUE_SIZE;
+}
+return item;
+}
+// Reverse the queue
+void reverseQueue(Queue *q) {
+int stack[MAX_QUEUE_SIZE];
+int top = -1;
+// Push all elements of the queue onto a stack
+while (!isEmpty(q)) {
+stack[++top] = dequeue(q);
+}
+// Pop elements from the stack and enqueue them back into the queue
+while (top >= 0) {
+enqueue(q, stack[top--]);
+}
+}
+int main() {
+Queue q;
+initQueue(&q);
+int n;
+printf("Enter the number of elements in the queue: ");
+scanf("%d", &n);
+printf("Enter %d elements into the queue:\n", n);
+for (int i = 0; i < n; i++) {
+int item;
+scanf("%d", &item);
+enqueue(&q, item);
+}
+printf("Original Queue: ");
+while (!isEmpty(&q)) {
+int item = dequeue(&q);
+printf("%d ", item);
+}
+printf("\n");
+reverseQueue(&q);
+printf("Reversed Queue: ");
+while (!isEmpty(&q)) {
+int item = dequeue(&q); printf("%d ", item); }printf("\n"); return 0; }Q3. Viva [5]
+Q1. Create a random array of n integers. Accept a value x fromuser and uselinear search algorithm to check whether the number is present in thearray or not and output the position if the number is present. [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to perform linear search
+int linearSearch(int arr[], int n, int x) {
+for (int i = 0; i < n; i++) {
+if (arr[i] == x) {
+return i; // Return the index if the element is found
+}
+}
+return -1; // Return -1 if the element is not found
+}
+int main() {
+int n;
+printf("Enter the number of elements in the array: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid array size. Please enter a positive integer.\n");
+return 1;
+}
+int arr[n];
+srand(time(NULL)); // Seed for random number generation
+// Create a random array of n integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Generates random integers between 0 and 99}
+printf("Generated Array: ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+int x;
+printf("Enter the number to search for: ");
+scanf("%d", &x);
+int position = linearSearch(arr, n, x);
+if (position != -1) {
+printf("%d found at position %d in the array.\n", x, position);
+} else {
+printf("%d not found in the array.\n", x);
+}
+return 0;
+}
+Q2. Implement a priority queue library (PriorityQ.h) of integers using a staticimplementation of the queue and implement the below two operations. 1) Add an element with its priority into the queue. 2) Delete an element from queue according to its priority. [20]
+PriorityQ.h
+#ifndef PRIORITYQ_H
+#define PRIORITYQ_H
+#define MAX_QUEUE_SIZE 100
+typedef struct {
+int data[MAX_QUEUE_SIZE];
+int priority[MAX_QUEUE_SIZE];
+int front, rear;
+} PriorityQueue;
+void initializePriorityQueue(PriorityQueue *pq);
+int isFull(PriorityQueue *pq);
+int isEmpty(PriorityQueue *pq);
+void add(PriorityQueue *pq, int item, int priority);
+int delete(PriorityQueue *pq);
+#endif // PRIORITYQ_H
+PriorityQ.c
+#include "PriorityQ.h" #include <stdio.h>
+#include <stdbool.h>
+void initializePriorityQueue(PriorityQueue *pq) {
+pq->front = -1;
+pq->rear = -1;
+}
+int isFull(PriorityQueue *pq) {
+return pq->rear == MAX_QUEUE_SIZE - 1;
+}
+int isEmpty(PriorityQueue *pq) {
+return pq->front == -1;
+}
+void add(PriorityQueue *pq, int item, int priority) {
+if (isFull(pq)) {
+printf("Priority queue is full. Cannot add more elements.\n");
+return;
+}
+if (isEmpty(pq)) {
+pq->front = pq->rear = 0;
+pq->data[pq->rear] = item;
+pq->priority[pq->rear] = priority;
+} else {
+int i;
+for (i = pq->rear; i >= pq->front; i--) {
+if (priority > pq->priority[i]) {
+pq->data[i + 1] = pq->data[i];
+pq->priority[i + 1] = pq->priority[i];
+} else {
+break;
+}
+}
+pq->data[i + 1] = item;
+pq->priority[i + 1] = priority;
+pq->rear++;
+}
+}
+int delete(PriorityQueue *pq) {
+if (isEmpty(pq)) {
+printf("Priority queue is empty. Cannot delete.\n");
+return -1; // Return a sentinel value for an empty queue
+}
+int item = pq->data[pq->front];
+pq->front++;
+if (pq->front > pq->rear) {
+pq->front = pq->rear = -1;
+}
+return item;
+}
+int main() {
+PriorityQueue pq;
+initializePriorityQueue(&pq);
+// Add elements with priorities add(&pq, 10, 2); add(&pq, 20, 1); add(&pq, 30, 3); add(&pq, 40, 2); printf("Priority Queue Elements: "); while (!isEmpty(&pq)) { int item = delete(&pq); printf("%d ", item); }printf("\n"); return 0; }Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using selection sort algorithm. [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to perform selection sort
+void selectionSort(int arr[], int n) {
+for (int i = 0; i < n - 1; i++) {
+int minIndex = i;
+for (int j = i + 1; j < n; j++) {
+if (arr[j] < arr[minIndex]) {
+minIndex = j;
+}
+}
+if (minIndex != i) {
+// Swap arr[i] and arr[minIndex]
+int temp = arr[i];
+arr[i] = arr[minIndex];
+arr[minIndex] = temp;
+}
+}
+}
+int main() {
+int n;
+srand(time(0)); // Seed for random number generation
+printf("Enter the number of elements in the array: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid array size. Please enter a positive integer.\n");
+return 1;
+}
+int arr[n];
+// Populate the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Generates random integers between 0 and 99}
+printf("Original Array: ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+selectionSort(arr, n);
+printf("Sorted Array (Ascending Order): ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+return 0;
+}
+Q2. Implement a queue library (dyqueue.h) of integers using a dynamic
+(linked list) implementation of the queue and implement init, enqueue, dequeue, isempty, peek operations. [20]
+Dyqueue.h
+#ifndef DYQUEUE_H
+#define DYQUEUE_H
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+typedef struct {
+Node* front;
+Node* rear;
+} DynamicQueue;
+void init(DynamicQueue* queue);
+void enqueue(DynamicQueue* queue, int item);
+int dequeue(DynamicQueue* queue);
+int isempty(DynamicQueue* queue);
+int peek(DynamicQueue* queue);
+#endif // DYQUEUE_H
+Dyqueue,c
+#include "dyqueue.h" #include <stdio.h>
+#include <stdlib.h>
+void init(DynamicQueue* queue) {
+queue->front = NULL;
+queue->rear = NULL;
+}
+void enqueue(DynamicQueue* queue, int item) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode == NULL) {
+printf("Memory allocation failed. Cannot enqueue.\n");
+return;
+}
+newNode->data = item;
+newNode->next = NULL;
+if (queue->rear == NULL) {
+queue->front = newNode;
+queue->rear = newNode;
+} else {
+queue->rear->next = newNode;
+queue->rear = newNode;
+}
+}
+int dequeue(DynamicQueue* queue) {
+if (isempty(queue)) {
+printf("Queue is empty. Cannot dequeue.\n");
+return -1; // Return a sentinel value for an empty queue
+}
+int item = queue->front->data;
+Node* temp = queue->front;
+if (queue->front == queue->rear) {
+queue->front = NULL;
+queue->rear = NULL;
+} else {
+queue->front = queue->front->next;
+}
+free(temp);
+return item;
+}
+int isempty(DynamicQueue* queue) {
+return queue->front == NULL;
+}
+int peek(DynamicQueue* queue) {
+if (isempty(queue)) {
+printf("Queue is empty. Cannot peek.\n");
+return -1; // Return a sentinel value for an empty queue
+}
+return queue->front->data;
+}
+int main() {
+DynamicQueue queue;
+init(&queue);
+enqueue(&queue, 10);
+enqueue(&queue, 20);
+enqueue(&queue, 30);
+printf("Front element: %d\n", peek(&queue));
+printf("Dequeued elements: ");
+while (!isempty(&queue)) {
+printf("%d ", dequeue(&queue));
+}
+printf("\n");
+printf("Is the queue empty? %s\n", isempty(&queue) ? "Yes" : "No");
+return 0;
+}
+Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using quick sort algorithm. [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to partition the array and return the pivot index
+int partition(int arr[], int low, int high) {
+int pivot = arr[high];
+int i = (low - 1);
+for (int j = low; j <= high - 1; j++) {
+if (arr[j] < pivot) {
+i++;
+// Swap arr[i] and arr[j]
+int temp = arr[i];
+arr[i] = arr[j];
+arr[j] = temp;
+}
+}
+// Swap arr[i+1] and arr[high] (pivot)
+int temp = arr[i + 1];
+arr[i + 1] = arr[high];
+arr[high] = temp;
+return (i + 1);
+}
+// Function to perform quicksort
+void quickSort(int arr[], int low, int high) {
+if (low < high) {
+int pivotIndex = partition(arr, low, high);
+quickSort(arr, low, pivotIndex - 1);
+quickSort(arr, pivotIndex + 1, high);
+}
+}
+int main() {
+int n;
+srand(time(0)); // Seed for random number generation
+printf("Enter the number of elements in the array: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid array size. Please enter a positive integer.\n");
+return 1;
+}
+int arr[n];
+// Populate the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Generates random integers between 0 and 99}
+printf("Original Array: ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+quickSort(arr, 0, n - 1);
+printf("Sorted Array (Ascending Order): ");
+for (int i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+return 0;
+}
+Q2. Write a program that checks whether a string of characters is palindromeor not. The function should use a stack library (cststack.h) of stack of
+characters using a static implementation of the stack. [20]
+cststack.h
+#ifndef CSTSTACK_H
+#define CSTSTACK_H
+#define MAX_STACK_SIZE 100
+typedef struct {
+char data[MAX_STACK_SIZE];
+int top;
+} CharStack;
+void initializeCharStack(CharStack *stack) {
+stack->top = -1;
+}
+int isCharStackEmpty(CharStack *stack) {
+return stack->top == -1;
+}
+int isCharStackFull(CharStack *stack) {
+return stack->top == MAX_STACK_SIZE - 1;
+}
+void pushChar(CharStack *stack, char item) {
+if (!isCharStackFull(stack)) {
+stack->data[++stack->top] = item;
+}
+}
+char popChar(CharStack *stack) {
+if (!isCharStackEmpty(stack)) {
+return stack->data[stack->top--];
+}
+return '\0'; // Return null character for an empty stack
+}
+#endif // CSTSTACK_H
+Paliondrome.c
+#include <stdio.h>
+#include <string.h>
+#include "cststack.h"
+int isPalindrome(char *str) {
+CharStack stack;
+initializeCharStack(&stack);
+int len = strlen(str);
+// Push characters from the string onto the stack
+for (int i = 0; i < len; i++) {
+pushChar(&stack, str[i]);
+}
+// Pop characters from the stack and compare with the original string
+for (int i = 0; i < len; i++) {
+char ch = popChar(&stack);
+if (ch != str[i]) {
+return 0; // Not a palindrome
+}
+}
+return 1; // Palindrome
+}
+int main() {
+char str[100];
+printf("Enter a string: ");
+scanf("%s", str);
+if (isPalindrome(str)) {
+printf("%s is a palindrome.\n", str);
+} else {
+printf("%s is not a palindrome.\n", str);
+}
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a list library (singlylist.h) for a singly linked list of integer
+With the operations create, delete specific element and display. Write amenu driven program to call these operations [10]
+Q2. Write a C program to check whether the contents of two stacks are
+identical. Use stack library to perform basic stack operations. Neither
+stack should be changed. [20]
+Singlylist.h
+#ifndef SINGLYLIST_H
+#define SINGLYLIST_H
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+Node* create() {
+int n, data;
+Node* head = NULL;
+Node* current = NULL;
+printf("Enter the number of elements: ");
+scanf("%d", &n);
+for (int i = 0; i < n; i++) {
+printf("Enter element %d: ", i + 1);
+scanf("%d", &data);
+Node* newNode = (Node*)malloc(sizeof(Node));
+newNode->data = data;
+newNode->next = NULL;
+if (head == NULL) {
+head = newNode;
+current = newNode;
+} else {
+current->next = newNode;
+current = newNode;
+}
+}
+return head;
+}
+void deleteElement(Node** head, int element) {
+Node* current = *head;
+Node* prev = NULL;
+if (current != NULL && current->data == element) {
+*head = current->next;
+free(current);
+printf("%d deleted from the list.\n", element);
+return;
+}
+while (current != NULL && current->data != element) {
+prev = current;
+current = current->next;
+}
+if (current == NULL) {
+printf("%d not found in the list.\n", element);
+return;
+}
+prev->next = current->next;
+free(current);
+printf("%d deleted from the list.\n", element);
+}
+void display(Node* head) {
+Node* current = head;
+printf("List elements: ");
+while (current != NULL) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+#endif // SINGLYLIST_H
+Singlylist.c
+#include <stdio.h>
+#include "singlylist.h"
+int main() {
+Node* head = NULL;
+int choice, element;
+do {
+printf("\nSingly Linked List Menu:\n");
+printf("1. Create a list\n");
+printf("2. Delete an element\n");
+printf("3. Display the list\n");
+printf("4. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+if (head != NULL) {
+printf("List already exists. Re-creating the list.\n");
+}
+head = create();
+break;
+case 2:
+if (head == NULL) {
+printf("List is empty. Create a list first.\n");
+} else {
+printf("Enter the element to delete: ");
+scanf("%d", &element);
+deleteElement(&head, element);
+}
+break;
+case 3:
+if (head == NULL) {
+printf("List is empty. Create a list first.\n");
+} else {
+display(head);
+}
+break;
+case 4:
+printf("Exiting the program.\n");
+break;
+default:
+printf("Invalid choice. Please select a valid option.\n");
+}
+} while (choice != 4);
+return 0;
+}
+Q3. Viva [5]
+Q1. Write a program to convert an infix expression of the form(a*(b+c)*((d-a)/b)) into its equivalent postfix notation. Consider usual precedence’s ofoperators. Use stack library of stack of characters using static implementation. [10]Cststack.h
+#ifndef CSTSTACK_H
+#define CSTSTACK_H
+#define MAX_STACK_SIZE 100
+typedef struct {
+char data[MAX_STACK_SIZE];
+int top;
+} CharStack;
+#include "cststack.h" void initializeCharStack(CharStack *stack) {
+stack->top = -1;
+}
+int isCharStackEmpty(CharStack *stack) {
+return stack->top == -1;
+}
+int isCharStackFull(CharStack *stack) {
+return stack->top == MAX_STACK_SIZE - 1;
+}
+void pushChar(CharStack *stack, char item) {
+if (!isCharStackFull(stack)) {
+stack->data[++stack->top] = item;
+}
+}
+char popChar(CharStack *stack) {
+if (!isCharStackEmpty(stack)) {
+return stack->data[stack->top--];
+}
+return '\0'; // Return null character for an empty stack
+}
+#endif // CSTSTACK_H
+Infixtopostfix.c
+#include <stdio.h>
+#include <string.h>
+#include "cststack.h"
+// Function to return the precedence of operators
+int getPrecedence(char operator) {
+if (operator == '+' || operator == '-') {
+return 1;
+} else if (operator == '*' || operator == '/') {
+return 2;
+}
+return 0;
+}
+// Function to convert infix expression to postfix notationvoid infixToPostfix(const char *infix, char *postfix) {
+CharStack stack;
+initializeCharStack(&stack);
+int len = strlen(infix);
+int j = 0;
+for (int i = 0; i < len; i++) {
+char c = infix[i];
+if ((c >= 'a' && c <= 'z') || (c >= 'A' &&c <= 'Z')) {postfix[j++] = c;
+} else if (c == '(') {
+pushChar(&stack, c);
+} else if (c == ')') {
+while (!isCharStackEmpty(&stack) &&stack.data[stack.top] != '(') {
+postfix[j++] = popChar(&stack);
+}
+popChar(&stack); // Pop the '(' } else {
+while (!isCharStackEmpty(&stack) &&getPrecedence(c) <= getPrecedence(stack.data[stack.top])) {
+postfix[j++] = popChar(&stack);
+}
+pushChar(&stack, c);
+}
+}
+while (!isCharStackEmpty(&stack)) {
+postfix[j++] = popChar(&stack);
+}
+postfix[j] = '\0'; // Null-terminate the postfix expression}
+int main() {
+char infix[100];
+char postfix[100];
+printf("Enter an infix expression: ");
+scanf("%s", infix);
+infixToPostfix(infix, postfix);
+printf("Postfix notation: %s\n", postfix);
+return 0;
+}
+Q2 Read the data from the ‘employee.txt’ file and sort on age using Countingsort or Quick sort and write the sorted data to another file 'sortedemponage.txt'. [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// Define a structure to hold employee data
+typedef struct {
+char name[50];
+int age;
+} Employee;
+// Function to compare employees by age for quicksort
+int compareByAge(const void* a, const void* b) {
+return ((Employee*)a)->age - ((Employee*)b)->age;
+}
+int main() {
+// Open the input file for reading
+FILE* inputFile = fopen("employee.txt", "r");
+if (inputFile == NULL) {
+printf("Error opening the input file.\n");
+return 1;
+}
+// Read the number of employees from the first line of the file
+int numEmployees;
+fscanf(inputFile, "%d", &numEmployees);
+// Create an array of employees
+Employee* employees = (Employee*)malloc(numEmployees *
+sizeof(Employee));
+// Read employee data from the file
+for (int i = 0; i < numEmployees; i++) {
+fscanf(inputFile, "%s %d", employees[i].name, &employees[i].age);
+}
+// Close the input file
+fclose(inputFile);
+// Sort the employees by age using quicksort
+qsort(employees, numEmployees, sizeof(Employee), compareByAge);
+// Open the output file for writing
+FILE* outputFile = fopen("sortedemponage.txt", "w");
+if (outputFile == NULL) {
+printf("Error opening the output file.\n");
+return 1;
+}
+// Write the sorted employee data to the output file
+for (int i = 0; i < numEmployees; i++) {
+fprintf(outputFile, "%s %d\n", employees[i].name, employees[i].age);
+}
+// Close the output file
+fclose(outputFile);
+// Free the memory used by the employee array
+free(employees);
+printf("Employee data sorted by age and written to 'sortedemponage.txt'.\n");
+return 0;
+}
+Q3 Viva [5]
+Q1. Implement a linear queue library (st_queue.h) of integers using a staticimplementation of the queue and implementing the init(Q), add(Q) and peek(Q)operations. Write a program that includes queue library and calls different
+queue operations [10]
+st_queue.h
+#ifndef ST_QUEUE_H
+#define ST_QUEUE_H
+#define MAX_QUEUE_SIZE 100
+typedef struct {
+int data[MAX_QUEUE_SIZE];
+int front, rear;
+} StaticQueue;
+void init(StaticQueue* Q) {
+Q->front = -1;
+Q->rear = -1;
+}
+int add(StaticQueue* Q, int item) {
+if ((Q->rear == MAX_QUEUE_SIZE - 1 && Q->front == 0) || (Q->rear +1==Q->front)) {
+printf("Queue is full. Cannot add.\n");
+return 0; // Return 0 to indicate failure
+} else if (Q->rear == -1) {
+Q->front = 0;
+Q->rear = 0;
+} else if (Q->rear == MAX_QUEUE_SIZE - 1) {
+Q->rear = 0;
+} else {
+Q->rear++;
+}
+Q->data[Q->rear] = item;
+return 1; // Return 1 to indicate success
+}
+int peek(StaticQueue* Q) {
+if (Q->front == -1) {
+printf("Queue is empty. Cannot peek.\n");
+return -1; // Return -1 to indicate an empty queue
+}
+return Q->data[Q->front];
+}
+#endif // ST_QUEUE_H
+st_queue.c
+#include <stdio.h>
+#include "st_queue.h"
+int main() {
+StaticQueue queue;
+init(&queue);
+// Adding elements to the queue
+add(&queue, 10);
+add(&queue, 20);
+add(&queue, 30);
+// Peeking at the front element
+int front = peek(&queue);
+if (front != -1) {
+printf("Front element: %d\n", front);
+}
+return 0;
+}
+Q2. Read the data from the file “employee.txt” and sort on names inalphabetical order (use strcmp) using bubble sort or selection sort. [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// Define a structure to hold employee data
+typedef struct {
+char name[50];
+int age;
+} Employee;
+// Function to perform bubble sort on the array of employees based on names
+void bubbleSort(Employee employees[], int numEmployees) {
+int i, j;
+Employee temp;
+for (i = 0; i < numEmployees - 1; i++) {
+for (j = 0; j < numEmployees - i - 1; j++) {
+if (strcmp(employees[j].name, employees[j + 1].name) > 0) {
+temp = employees[j];
+employees[j] = employees[j + 1];
+employees[j + 1] = temp;
+}
+}
+}
+}
+int main() {
+// Open the input file for reading
+FILE* inputFile = fopen("employee.txt", "r");
+if (inputFile == NULL) {
+printf("Error opening the input file.\n");
+return 1;
+}
+// Read the number of employees from the first line of the file
+int numEmployees;
+fscanf(inputFile, "%d", &numEmployees);
+// Create an array of employees
+Employee* employees = (Employee*)malloc(numEmployees *sizeof(Employee));
+// Read employee data from the file
+for (int i = 0; i < numEmployees; i++) {
+fscanf(inputFile, "%s %d", employees[i].name, &employees[i].age);
+}
+// Close the input file
+fclose(inputFile);
+// Sort the employees by name in alphabetical order using bubble sort
+bubbleSort(employees, numEmployees);
+// Open the output file for writing
+FILE* outputFile = fopen("sortedemponname.txt", "w");
+if (outputFile == NULL) {
+printf("Error opening the output file.\n");
+return 1;
+}
+// Write the sorted employee data to the output file
+for (int i = 0; i < numEmployees; i++) {
+fprintf(outputFile, "%s %d\n", employees[i].name, employees[i].age);
+}
+// Close the output file
+fclose(outputFile);
+// Free the memory used by the employee array
+free(employees);
+printf("Employee data sorted by name in alphabetical order and writtento'sortedemponname.txt'.\n");
+return 0;
+}
+Q3 Viva [5]
+Q1. Accept n values in array from user. Accept a value x fromuser andusesentinel linear search algorithm to check whether the number is present inthearray or not and output the position if the number is present. [10]
+#include <stdio.h>
+int sentinelLinearSearch(int arr[], int n, int x) {
+int lastElement = arr[n - 1];
+arr[n - 1] = x; // Set the last element to the sentinel (x)
+int i = 0;
+while (arr[i] != x) {
+i++;
+}
+arr[n - 1] = lastElement; // Restore the last element
+if (i < n - 1) {
+return i; // Element found at index i
+}
+return -1; // Element not found
+}
+int main() {
+int n, x;
+printf("Enter the number of values in the array: ");
+scanf("%d", &n);
+int arr[n];
+printf("Enter %d values for the array:\n", n);
+for (int i = 0; i < n; i++) {
+scanf("%d", &arr[i]);
+}
+printf("Enter the value to search for: ");
+scanf("%d", &x);
+int position = sentinelLinearSearch(arr, n, x);
+if (position != -1) {
+printf("%d found at position %d in the array.\n", x, position);
+} else {
+printf("%d not found in the array.\n", x);
+}
+return 0;
+}
+Q2. Implement a priority queue library (PriorityQ.h) of integers using a staticimplementation of the queue and implementing the belowtwo operations. Write a driver program that includes queue library and calls different queueoperations. 1) Add an element with its priority into the queue. 2) Delete an element from queue according to its priority. [20]
+PriorityQ.h
+#ifndef PRIORITYQ_H
+#define PRIORITYQ_H
+#define MAX_QUEUE_SIZE 100
+typedef struct {
+int data[MAX_QUEUE_SIZE];
+int priority[MAX_QUEUE_SIZE];
+int front, rear;
+} PriorityQueue;
+void initPriorityQueue(PriorityQueue* Q) {
+Q->front = -1;
+Q->rear = -1;
+}
+int add(PriorityQueue* Q, int item, int priority) {
+if (Q->rear == MAX_QUEUE_SIZE - 1) {
+printf("Queue is full. Cannot add.\n");
+return 0; // Return 0 to indicate failure
+}
+int i = Q->rear;
+while (i >= 0 && priority < Q->priority[i]) {
+Q->data[i + 1] = Q->data[i];
+Q->priority[i + 1] = Q->priority[i];
+i--;
+}
+Q->data[i + 1] = item;
+Q->priority[i + 1] = priority;
+Q->rear++;
+return 1; // Return 1 to indicate success
+}
+int deleteMin(PriorityQueue* Q) {
+if (Q->front > Q->rear) {
+printf("Queue is empty. Cannot delete.\n");
+return -1; // Return -1 to indicate an empty queue
+}
+int minPriority = Q->priority[Q->front];
+int minPosition = Q->front;
+int i = Q->front + 1;
+while (i <= Q->rear) {
+if (Q->priority[i] < minPriority) {
+minPriority = Q->priority[i];
+minPosition = i;
+}
+i++;
+}
+int deletedItem = Q->data[minPosition];
+for (i = minPosition; i < Q->rear; i++) {
+Q->data[i] = Q->data[i + 1];
+Q->priority[i] = Q->priority[i + 1];
+}
+Q->rear--;
+return deletedItem;
+}
+#endif // PRIORITYQ_H
+PriorityQ.c
+#include <stdio.h>
+#include "PriorityQ.h"
+int main() {
+PriorityQueue priorityQueue;
+initPriorityQueue(&priorityQueue);
+// Add elements with priorities to the priority queue
+add(&priorityQueue, 10, 2);
+add(&priorityQueue, 20, 1);
+add(&priorityQueue, 30, 3);
+add(&priorityQueue, 40, 2);
+// Delete the element with the minimum priority
+int minItem = deleteMin(&priorityQueue);
+if (minItem != -1) {
+printf("Deleted element with minimum priority: %d\n", minItem);
+}
+return 0;
+}
+Q3 Viva [5]
+Q1. Read the data from file 'cities.txt' containing names of cities and their STDcodes. Accept a name of the city from user and use linear search algorithmtocheck whether the name is present in the file and output the STDcode, otherwise output “city not in the list”. [10]
+#include <stdio.h>
+#include <string.h>
+int main() {
+char cityName[50];
+char stdCode[50];
+int found = 0;
+// Open the file 'cities.txt' for reading
+FILE* file = fopen("cities.txt", "r");
+if (file == NULL) {
+printf("Error opening the file.\n");
+return 1;
+}
+printf("Enter the name of the city: ");
+scanf("%s", cityName);
+// Read data from the file and search for the city name
+while (fscanf(file, "%s %s", stdCode, cityName) != EOF) {
+if (strcmp(cityName, cityName) == 0) {
+printf("STD Code for %s is %s.\n", cityName, stdCode);
+found = 1;
+break;
+}
+}
+if (!found) {
+printf("City not in the list.\n");
+}
+// Close the file
+fclose(file);
+return 0;
+}
+Q2. Implement a circular queue library (cir_queue.h) of integers usingadynamic (circular linked list) implementation of the queue and implementinginit(Q), AddQueue(Q) and DeleteQueue(Q) operations. Write a menudrivenprogram that includes queue library and calls different queue operations. [20]
+cir_queue.h
+#ifndef CIR_QUEUE_H
+#define CIR_QUEUE_H
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+typedef struct {
+Node* front;
+Node* rear;
+} CircularQueue;
+void init(CircularQueue* Q) {
+Q->front = NULL;
+Q->rear = NULL;
+}
+void addQueue(CircularQueue* Q, int item) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+newNode->data = item;
+newNode->next = NULL;
+if (Q->rear == NULL) {
+Q->front = newNode;
+Q->rear = newNode;
+newNode->next = newNode; // Point to itself for a single element
+} else {
+Q->rear->next = newNode;
+Q->rear = newNode;
+newNode->next = Q->front; // Circular link
+}
+}
+int deleteQueue(CircularQueue* Q) {
+if (Q->front == NULL) {
+printf("Queue is empty. Cannot delete.\n");
+return -1; // Return -1 to indicate an empty queue
+}
+int item = Q->front->data;
+if (Q->front == Q->rear) {
+free(Q->front);
+Q->front = NULL;
+Q->rear = NULL;
+} else {
+Node* temp = Q->front;
+Q->front = Q->front->next;
+Q->rear->next = Q->front;
+free(temp);
+}
+return item;
+}
+#endif // CIR_QUEUE_H
+cir_queue.c
+#include <stdio.h>
+#include "cir_queue.h"
+int main() {
+CircularQueue queue;
+init(&queue);
+int choice, item;
+while (1) {
+printf("\nCircular Queue Menu:\n");
+printf("1. Add an element to the queue\n");
+printf("2. Delete an element from the queue\n");
+printf("3. Quit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter the element to add: ");
+scanf("%d", &item);
+addQueue(&queue, item);
+break;
+case 2:
+item = deleteQueue(&queue);
+if (item != -1) {
+printf("Deleted element: %d\n", item);
+}
+break;
+case 3:
+return 0;
+default:
+printf("Invalid choice. Please try again.\n");
+}
+}
+return 0;
+}
+Q3 Viva [5]
+Q1. Implement a stack library (ststack.h) of integers using a staticimplementation of the stack and implementing the operations like init(S), S=push(S) and S=pop(S). Write a driver program that includes stacklibraryand calls different stack operations. ststack.h
+#ifndef STSTACK_H
+#define STSTACK_H
+#define MAX_STACK_SIZE 100
+typedef struct {
+int data[MAX_STACK_SIZE];
+int top;
+} StaticStack;
+void init(StaticStack* S) {
+S->top = -1;
+}
+StaticStack push(StaticStack S, int item) {
+if (S.top < MAX_STACK_SIZE - 1) {
+S.data[++S.top] = item;
+}
+return S;
+}
+StaticStack pop(StaticStack S) {
+if (S.top > -1) {
+S.top--;
+}
+return S;
+}
+#endif // STSTACK_H
+driver.c
+#include <stdio.h>
+#include "ststack.h"
+int main() {
+StaticStack stack;
+init(&stack);
+int choice, item;
+while (1) {
+printf("\nStatic Stack Menu:\n");
+printf("1. Push an element onto the stack\n");
+printf("2. Pop an element from the stack\n");
+printf("3. Quit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter the element to push: ");
+scanf("%d", &item);
+stack = push(stack, item);
+break;
+case 2:
+if (stack.top == -1) {
+printf("Stack is empty. Cannot pop.\n");
+} else {
+stack = pop(stack);
+printf("Popped an element from the stack.\n");
+}
+break;
+case 3:
+return 0;
+default:
+printf("Invalid choice. Please try again.\n");
+}
+}
+return 0;
+}
+[10]
+Q2. Write a program that sorts the elements of linked list using bubblesort
+technique. [20]
+#include <stdio.h>
+#include <stdlib.h>
+// Define a linked list node
+struct Node {
+int data;
+struct Node* next;
+};
+// Function to create a new node
+struct Node* createNode(int data) {
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = data;
+newNode->next = NULL;
+return newNode;
+}
+// Function to insert a node at the end of the linked list
+void insertAtEnd(struct Node** head, int data) {
+struct Node* newNode = createNode(data);
+if (*head == NULL) {
+*head = newNode;
+} else {
+struct Node* current = *head;
+while (current->next != NULL) {
+current = current->next;
+}
+current->next = newNode;
+}
+}
+// Function to perform bubble sort on a linked list
+void bubbleSort(struct Node* head) {
+int swapped;
+struct Node* current;
+struct Node* last = NULL;
+if (head == NULL) {
+return;
+}
+do {
+swapped = 0;
+current = head;
+while (current->next != last) {
+if (current->data > current->next->data) {
+// Swap the data of current and next nodes
+int temp = current->data;
+current->data = current->next->data;
+current->next->data = temp;
+swapped = 1;
+}
+current = current->next;
+}
+last = current;
+} while (swapped);
+}
+// Function to display the linked list
+void display(struct Node* head) {
+struct Node* current = head;
+while (current != NULL) {
+printf("%d ", current->data);
+current = current->next;
+}
+printf("\n");
+}
+int main() {
+struct Node* head = NULL;
+// Insert elements into the linked list
+insertAtEnd(&head, 5);
+insertAtEnd(&head, 2);
+insertAtEnd(&head, 9);
+insertAtEnd(&head, 1);
+insertAtEnd(&head, 5);
+printf("Original linked list: ");
+display(head);
+bubbleSort(head);
+printf("Sorted linked list: "); display(head); return 0; }Q3 Viva [5]
+Q1. Create a random array of n integers. Accept a value x fromuser anduselinear search algorithm to check whether the number is present in the arrayor not and output the position if the number is present. [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to perform linear search in an array
+int linearSearch(int arr[], int n, int x) {
+for (int i = 0; i < n; i++) {
+if (arr[i] == x) {
+return i; // Element found at index i
+}
+}
+return -1; // Element not found
+}
+int main() {
+int n, x;
+printf("Enter the number of integers in the array: ");
+scanf("%d", &n);
+// Dynamically allocate memory for the array
+int* arr = (int*)malloc(n * sizeof(int));
+if (arr == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+// Seed the random number generator
+srand(time(NULL));
+// Fill the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Assuming integers in the range 0-99
+}
+// Print the array
+printf("Random array of %d integers: [", n);
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+printf("Enter the value to search for: ");
+scanf("%d", &x);
+int position = linearSearch(arr, n, x);
+if (position != -1) {
+printf("%d found at position %d in the array.\n", x, position);
+} else {
+printf("%d not found in the array.\n", x);
+}
+// Free the allocated memory
+free(arr);
+return 0;
+}
+Q2. A doubly ended queue allows additions and deletions fromboth theendsthat is front and rear. Initially additions from the front will not be possible. To avoid this situation, the array can be treated as if it were circular. Implement a queue library (dstqueue.h) of integers using a staticimplementation of the circular queue and implementing the followingoperations. [20]
+a. isFull(Q)
+b. addFront(Q)
+c. getRear(Q)
+d. deleteRear(Q)
+dstqueue.h
+#ifndef DSTQUEUE_H
+#define DSTQUEUE_H
+#define MAX_QUEUE_SIZE 100
+typedef struct {
+int data[MAX_QUEUE_SIZE];
+int front, rear;
+int count;
+} CircularQueue;
+void initQueue(CircularQueue* Q);
+int isFull(const CircularQueue* Q);
+int addFront(CircularQueue* Q, int item);
+int getRear(const CircularQueue* Q);
+int deleteRear(CircularQueue* Q);
+#endif // DSTQUEUE_H
+dstqueue.c
+#include "dstqueue.h" #include <stdio.h>
+void initQueue(CircularQueue* Q) {
+Q->front = -1;
+Q->rear = -1;
+Q->count = 0;
+}
+int isFull(const CircularQueue* Q) {
+return (Q->count == MAX_QUEUE_SIZE);
+}
+int addFront(CircularQueue* Q, int item) {
+if (isFull(Q)) {
+printf("Queue is full. Cannot add to the front.\n");
+return 0; // Return 0 to indicate failure
+}
+if (Q->front == -1) {
+Q->front = 0;
+Q->rear = 0;
+} else if (Q->front == 0) {
+Q->front = MAX_QUEUE_SIZE - 1;
+} else {
+Q->front--;
+}
+Q->data[Q->front] = item;
+Q->count++;
+return 1; // Return 1 to indicate success
+}
+int getRear(const CircularQueue* Q) {
+if (Q->rear == -1) {
+printf("Queue is empty. Cannot get the rear element.\n");
+return -1; // Return -1 to indicate an empty queue
+}
+return Q->data[Q->rear];
+}
+int deleteRear(CircularQueue* Q) {
+if (Q->rear == -1) {
+printf("Queue is empty. Cannot delete from the rear.\n");
+return -1; // Return -1 to indicate an empty queue
+}
+int item = Q->data[Q->rear];
+if (Q->front == Q->rear) {
+Q->front = -1;
+Q->rear = -1;
+} else if (Q->rear == 0) {
+Q->rear = MAX_QUEUE_SIZE - 1;
+} else {
+Q->rear--;
+}
+Q->count--;
+return item;
+}
+Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using selection sort algorithm. [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to perform selection sort on an array
+void selectionSort(int arr[], int n) {
+int i, j, minIndex, temp;
+for (i = 0; i < n - 1; i++) {
+minIndex = i;
+for (j = i + 1; j < n; j++) {
+if (arr[j] < arr[minIndex]) {
+minIndex = j;
+}
+}
+if (minIndex != i) {
+temp = arr[i];
+arr[i] = arr[minIndex];
+arr[minIndex] = temp;
+}
+}
+}
+int main() {
+int n;
+printf("Enter the number of integers in the array: ");
+scanf("%d", &n);
+// Dynamically allocate memory for the array
+int* arr = (int*)malloc(n * sizeof(int));
+if (arr == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+// Seed the random number generator
+srand(time(NULL));
+// Fill the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Assuming integers in the range 0-99
+}
+printf("Original array of %d integers: [", n);
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Sort the array using selection sort
+selectionSort(arr, n);
+printf("Sorted array in ascending order: [");
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Free the allocated memory
+free(arr);
+return 0;
+}
+Q2. Implement a linear queue library (dyqueue.h) of integers using a dynamic(circular linked list) implementation of the queue and implementingthequeue operations as (init(Q), AddQueue(Q, x), X=peek(Q)) [20]
+dyqueue.h
+#ifndef DYQUEUE_H
+#define DYQUEUE_H
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+typedef struct {
+Node* front;
+Node* rear;
+} CircularQueue;
+void init(CircularQueue* Q) {
+Q->front = NULL;
+Q->rear = NULL;
+}
+void addQueue(CircularQueue* Q, int x) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+newNode->data = x;
+newNode->next = NULL;
+if (Q->rear == NULL) {
+Q->front = newNode;
+Q->rear = newNode;
+} else {
+Q->rear->next = newNode;
+Q->rear = newNode;
+}
+}
+int peek(const CircularQueue* Q) {
+if (Q->front == NULL) {
+printf("Queue is empty. Cannot peek.\n");
+return -1; // Return -1 to indicate an empty queue
+}
+return Q->front->data;
+}
+#endif // DYQUEUE_H
+dyqueue.c
+#include <stdio.h>
+#include "dyqueue.h"
+int main() {
+CircularQueue queue;
+init(&queue);
+addQueue(&queue, 10);
+addQueue(&queue, 20);
+addQueue(&queue, 30);
+printf("Front element: %d\n", peek(&queue));
+return 0;
+}
+Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using Counting sort algorithm. [10]
+#include <stdio.h>
+#include <stdlib.h>
+// Function to find the maximum element in the array
+int findMax(int arr[], int n) {
+int max = arr[0];
+for (int i = 1; i < n; i++) {
+if (arr[i] > max) {
+max = arr[i];
+}
+}
+return max;
+}
+// Function to perform counting sort
+void countingSort(int arr[], int n) {
+int max = findMax(arr, n);
+int countSize = max + 1;
+// Create a count array to store the count of each element
+int* count = (int*)malloc(countSize * sizeof(int));
+if (count == NULL) {
+printf("Memory allocation failed.\n");
+return;
+}
+// Initialize count array to zeros
+for (int i = 0; i < countSize; i++) {
+count[i] = 0;
+}
+// Count the occurrences of each element
+for (int i = 0; i < n; i++) {
+count[arr[i]]++;
+}
+// Reconstruct the sorted array
+int index = 0;
+for (int i = 0; i < countSize; i++) {
+while (count[i] > 0) {
+arr[index] = i;
+index++;
+count[i]--;
+}
+}
+// Free the memory used for the count array
+free(count);
+}
+int main() {
+int n;
+printf("Enter the number of integers in the array: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid input. Please enter a positive number.\n");
+return 1;
+}
+// Dynamically allocate memory for the array
+int* arr = (int*)malloc(n * sizeof(int));
+if (arr == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+// Fill the array with random integers (0 to 99)
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100;
+}
+// Display the original array
+printf("Original array of %d integers: [", n);
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Sort the array using counting sort
+countingSort(arr, n);
+// Display the sorted array
+printf("Sorted array in ascending order: [");
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Free the memory used for the array
+free(arr);
+return 0;
+}
+Q2. A postfix expression of the form ab+cd-*ab/ is to be evaluatedafteraccepting the values of a, b, c and d. The value should be accepted onlyonceand the same value is to be used for repeated occurrence of same symbol intheexpression. Formulate the problem and write a C program to solve the problemby using stack [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+// Define a structure for the stack
+typedef struct {
+int top;
+int capacity;
+int* array;
+} Stack;
+// Function to initialize the stack
+Stack* createStack(int capacity) {
+Stack* stack = (Stack*)malloc(sizeof(Stack));
+stack->capacity = capacity;
+stack->top = -1;
+stack->array = (int*)malloc(stack->capacity * sizeof(int));
+return stack;
+}
+// Function to check if the stack is empty
+int isEmpty(Stack* stack) {
+return stack->top == -1;
+}
+// Function to push an element onto the stack
+void push(Stack* stack, int item) {
+stack->array[++stack->top] = item;
+}
+// Function to pop an element from the stack
+int pop(Stack* stack) {
+return stack->array[stack->top--];
+}
+// Function to evaluate the postfix expression
+int evaluatePostfixExpression(char* postfix, int values[]) {
+Stack* stack = createStack(strlen(postfix));
+for (int i = 0; postfix[i] != '\0'; i++) {
+if (isalnum(postfix[i])) {
+// If it's an operand, push its value onto the stack
+push(stack, values[postfix[i] - 'a']);
+} else {
+// If it's an operator, pop operands, perform the operation, and push the result
+int operand2 = pop(stack);
+int operand1 = pop(stack);
+switch (postfix[i]) {
+case '+':
+push(stack, operand1 + operand2);
+break;
+case '-':
+push(stack, operand1 - operand2);
+break;
+case '*':
+push(stack, operand1 * operand2);
+break;
+case '/':
+push(stack, operand1 / operand2);
+break;
+}
+}
+}
+int result = pop(stack);
+// Free the stack memory
+free(stack->array);
+free(stack);
+return result;
+}
+int main() {
+char postfixExpression[100];
+int values[4];
+// Accept values for variables a, b, c, and d
+printf("Enter values for variables a, b, c, and d: ");
+for (int i = 0; i < 4; i++) {
+char var;
+int value;
+scanf(" %c %d", &var, &value);
+values[var - 'a'] = value;
+}
+// Accept the postfix expression
+printf("Enter the postfix expression: ");
+scanf("%s", postfixExpression);
+int result = evaluatePostfixExpression(postfixExpression, values);
+printf("Result of the expression: %d\n", result);
+return 0;
+}
+Q3. Viva [5]
+Q1 Implement a list library (singlylist.h) for a singly linked list. Create a linkedlist, reverse it and display reversed linked list. [10]
+#include <stdio.h>
+#include <stdlib.h>
+// Define a structure for a singly linked list node
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+newNode->data = data;
+newNode->next = NULL;
+return newNode;
+}
+// Function to insert a node at the beginning of the linked list
+Node* insertAtFront(Node* head, int data) {
+Node* newNode = createNode(data);
+newNode->next = head;
+return newNode;
+}
+// Function to display the linked list
+void displayList(Node* head) {
+Node* current = head;
+while (current != NULL) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+// Function to reverse the linked list
+Node* reverseList(Node* head) {
+Node* prev = NULL;
+Node* current = head;
+Node* next = NULL;
+while (current != NULL) {
+next = current->next;
+current->next = prev;
+prev = current;
+current = next;
+}
+return prev;
+}
+int main() {
+Node* head = NULL;
+// Create a singly linked list
+head = insertAtFront(head, 1);
+head = insertAtFront(head, 2);
+head = insertAtFront(head, 3);
+head = insertAtFront(head, 4);
+head = insertAtFront(head, 5);
+printf("Original linked list:\n");
+displayList(head);
+// Reverse the linked list
+head = reverseList(head);
+printf("Reversed linked list:\n");
+displayList(head);
+return 0;
+}
+Q2 Write a program that copies the contents of one stack into another. Use stacklibrary to perform basic stack operations. The order of two stacks must beidentical.(Hint: Use a temporary stack to preserve the order). [20]#include <stdio.h>
+#include "stack.h" // Include your stack library here
+// Function to copy the contents of one stack to another while preserving order
+void copyStack(Stack* source, Stack* destination) {
+Stack tempStack;
+initStack(&tempStack); // Initialize a temporary stack
+while (!isEmpty(source)) {
+int topValue = pop(source);
+push(&tempStack, topValue); // Push to the temporary stack
+}
+while (!isEmpty(&tempStack)) {
+int topValue = pop(&tempStack);
+push(destination, topValue); // Push to the destination stack
+push(source, topValue); // Push the value back to the source stack to preserveorder
+}
+}
+int main() {
+Stack stack1, stack2;
+initStack(&stack1);
+initStack(&stack2);
+// Push some values onto the first stack (stack1)
+push(&stack1, 1);
+push(&stack1, 2);
+push(&stack1, 3);
+push(&stack1, 4);
+printf("Contents of Stack 1:\n");
+displayStack(&stack1);
+// Copy the contents of stack1 to stack2
+copyStack(&stack1, &stack2);
+printf("Contents of Stack 2 (copied from Stack 1):\n");
+displayStack(&stack2);
+return 0;
+}
+Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using Selection sort algorithm [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to perform Selection Sort on an array
+void selectionSort(int arr[], int n) {
+int i, j, minIndex, temp;
+for (i = 0; i < n - 1; i++) {
+minIndex = i;
+for (j = i + 1; j < n; j++) {
+if (arr[j] < arr[minIndex]) {
+minIndex = j;
+}
+}
+if (minIndex != i) {
+temp = arr[i];
+arr[i] = arr[minIndex];
+arr[minIndex] = temp;
+}
+}
+}
+int main() {
+int n;
+printf("Enter the number of integers in the array: ");
+scanf("%d", &n);
+// Dynamically allocate memory for the array
+int *arr = (int *)malloc(n * sizeof(int));
+if (arr == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+// Seed the random number generator
+srand(time(NULL));
+// Fill the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Assuming integers in the range 0-99
+}
+printf("Original array of %d integers: [", n);
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Sort the array using Selection Sort
+selectionSort(arr, n);
+printf("Sorted array in ascending order: [");
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Free the allocated memory
+free(arr);
+return 0;
+}
+Q2. Write a program that multiply two single variable polynomials. Eachpolynomial should be represented as a list with linked list implementation[20]#include <stdio.h>
+#include <stdlib.h>
+// Structure to represent a term in a polynomial
+typedef struct Term {
+int coefficient;
+int exponent;
+struct Term* next;
+} Term;
+// Function to create a new term with the given coefficient and exponent
+Term* createTerm(int coefficient, int exponent) {
+Term* newTerm = (Term*)malloc(sizeof(Term));
+if (newTerm == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newTerm->coefficient = coefficient;
+newTerm->exponent = exponent;
+newTerm->next = NULL;
+return newTerm;
+}
+// Function to insert a term into a polynomial
+void insertTerm(Term** polynomial, int coefficient, int exponent) {
+Term* newTerm = createTerm(coefficient, exponent);
+if (*polynomial == NULL || exponent > (*polynomial)->exponent) {
+newTerm->next = *polynomial;
+*polynomial = newTerm;
+} else {
+Term* current = *polynomial;
+while (current->next != NULL && exponent < current->next->exponent) {current = current->next;
+}
+newTerm->next = current->next;
+current->next = newTerm;
+}
+}
+// Function to display a polynomial
+void displayPolynomial(Term* polynomial) {
+while (polynomial != NULL) {
+printf("%dx^%d ", polynomial->coefficient, polynomial->exponent);
+if (polynomial->next != NULL) {
+printf("+ ");
+}
+polynomial = polynomial->next;
+}
+printf("\n");
+}
+// Function to multiply two polynomials
+Term* multiplyPolynomials(Term* poly1, Term* poly2) {
+Term* result = NULL;
+while (poly1 != NULL) {
+Term* current = poly2;
+while (current != NULL) {
+int coefficient = poly1->coefficient * current->coefficient;
+int exponent = poly1->exponent + current->exponent;
+insertTerm(&result, coefficient, exponent);
+current = current->next;
+}
+poly1 = poly1->next;
+}
+return result;
+}
+int main() {
+Term* polynomial1 = NULL;
+Term* polynomial2 = NULL;
+Term* result;
+// Create the first polynomial
+insertTerm(&polynomial1, 2, 3);
+insertTerm(&polynomial1, -1, 2);
+insertTerm(&polynomial1, 3, 0);
+// Create the second polynomial
+insertTerm(&polynomial2, 4, 2);
+insertTerm(&polynomial2, -1, 1);
+printf("Polynomial 1: ");
+displayPolynomial(polynomial1);
+printf("Polynomial 2: ");
+displayPolynomial(polynomial2);
+result = multiplyPolynomials(polynomial1, polynomial2);
+printf("Result of multiplication: ");
+displayPolynomial(result);
+return 0;
+}
+Q3. Viva [5]
+Q1. Sort a random array of n integers (accept the value of n fromuser) inascending order by using selection sort algorithm [10]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Function to perform Selection Sort on an array
+void selectionSort(int arr[], int n) {
+for (int i = 0; i < n - 1; i++) {
+int minIndex = i;
+// Find the index of the minimum element in the remaining unsorted portionfor (int j = i + 1; j < n; j++) {
+if (arr[j] < arr[minIndex]) {
+minIndex = j;
+}
+}
+// Swap the found minimum element with the element at index i
+int temp = arr[i];
+arr[i] = arr[minIndex];
+arr[minIndex] = temp;
+}
+}
+int main() {
+int n;
+printf("Enter the number of integers in the array: ");
+scanf("%d", &n);
+// Dynamically allocate memory for the array
+int* arr = (int*)malloc(n * sizeof(int));
+if (arr == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+// Seed the random number generator
+srand(time(NULL));
+// Fill the array with random integers
+for (int i = 0; i < n; i++) {
+arr[i] = rand() % 100; // Assuming integers in the range 0-99
+}
+printf("Original array of %d integers: [", n);
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Sort the array using Selection Sort
+selectionSort(arr, n);
+printf("Sorted array in ascending order: [");
+for (int i = 0; i < n; i++) {
+printf("%d", arr[i]);
+if (i < n - 1) {
+printf(", ");
+}
+}
+printf("]\n");
+// Free the allocated memory
+free(arr);
+return 0;
+}
+Q2. There are lists where insertion should ensure the ordering of data elements. Since the elements are in ascending order the search can terminate once equal
+or greater element is found. Implement a doubly linked list of ordered integers(ascending/descending) with insert, search and display operations. [20]
+#include <stdio.h>
+#include <stdlib.h>
+// Define a structure for a node in the doubly linked list
+typedef struct Node {
+int data;
+struct Node* prev;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newNode->data = data;
+newNode->prev = NULL;
+newNode->next = NULL;
+return newNode;
+}
+// Function to insert a new node in ascending order
+void insertInOrder(Node** head, int data) {
+Node* newNode = createNode(data);
+if (*head == NULL) {
+*head = newNode;
+return;
+}
+Node* current = *head;
+if (data <= current->data) {
+newNode->next = current;
+current->prev = newNode;
+*head = newNode;
+return;
+}
+while (current->next != NULL && current->next->data < data) {
+current = current->next;
+}
+newNode->next = current->next;
+if (current->next != NULL) {
+current->next->prev = newNode;
+}
+current->next = newNode;
+newNode->prev = current;
+}
+// Function to search for an element in the list
+Node* search(Node* head, int target) {
+Node* current = head;
+while (current != NULL && current->data <= target) {
+if (current->data == target) {
+return current;
+}
+current = current->next;
+}
+return NULL;
+}
+// Function to display the list
+void displayList(Node* head) {
+Node* current = head;
+while (current != NULL) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+int main() {
+Node* head = NULL;
+// Insert elements in ascending order
+insertInOrder(&head, 10);
+insertInOrder(&head, 5);
+insertInOrder(&head, 20);
+insertInOrder(&head, 15);
+printf("Doubly Linked List in Ascending Order:\n");
+displayList(head);
+// Search for an element
+int target = 20;
+Node* result = search(head, target);
+if (result != NULL) {
+printf("Found %d in the list.\n", target);
+} else {
+printf("%d not found in the list.\n", target);
+}
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a stack library (ststack.h) of integers using a staticimplementation of the stack and implementing the operations like init(S), S=push(S), isFull(S). Write a driver program that includes stack libraryandcalls different stack operations. [10]
+stystack.h
+#ifndef STSTACK_H
+#define STSTACK_H
+#define MAX_STACK_SIZE 100
+typedef struct {
+int data[MAX_STACK_SIZE];
+int top;
+} Stack;
+void init(Stack* S) {
+S->top = -1;
+}
+int isFull(const Stack* S) {
+return S->top == MAX_STACK_SIZE - 1;
+}
+Stack push(Stack S, int element) {
+if (!isFull(&S)) {
+S.top++;
+S.data[S.top] = element;
+}
+return S;
+}
+#endif // STSTACK_H
+stsctack.c
+#include <stdio.h>
+#include "ststack.h"
+int main() {
+Stack stack;
+init(&stack);
+// Push elements onto the stack
+for (int i = 1; i <= 5; i++) {
+stack = push(stack, i * 10);
+printf("Pushed: %d\n", i * 10);
+}
+// Check if the stack is full
+if (isFull(&stack)) {
+printf("Stack is full.\n");
+} else {
+printf("Stack is not full.\n");
+}
+return 0;
+}
+Q2. There are lists where new elements are always appended at the endof thelist. The list can be implemented as a circular list with the external pointerpointing to the last element of the list. Implement singly linked circular list ofintegers with append and display operations. The operation append(L, n), appends to the end of the list, n integers either accepted fromuser or randomlygenerated. [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+// Define the structure for a node in the circular list
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newNode->data = data;
+newNode->next = NULL;
+return newNode;
+}
+// Function to append 'n' integers to the circular list
+Node* appendN(Node* last, int n) {
+Node* current = last;
+for (int i = 0; i < n; i++) {
+int data;
+// You can either accept data from the user or generate it randomly
+// Uncomment one of the following lines accordingly. // printf("Enter data: ");
+// scanf("%d", &data);
+data = rand() % 100; // Generates random integers (0-99)
+Node* newNode = createNode(data);
+newNode->next = current->next;
+current->next = newNode;
+current = newNode;
+}
+return current;
+}
+// Function to display the circular list
+void displayList(Node* last) {
+if (last == NULL) {
+printf("List is empty.\n");
+return;
+}
+Node* current = last->next;
+do {
+printf("%d -> ", current->data);
+current = current->next;
+} while (current != last->next);
+printf("\n");
+}
+int main() {
+Node* last = NULL;
+// Seed the random number generator
+srand(time(NULL));
+int n;
+printf("Enter the number of integers to append: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid input.\n");
+return 1;
+}
+// Append 'n' integers to the circular list
+last = appendN(last, n);
+printf("Circular Linked List:\n");
+displayList(last);
+return 0;
+}
+Q3. Viva [5]
+Q1. Write a program that reverses a string of characters. The function shoulduse a stack library (cststack.h). Use a static implementation of the stack. [10]
+cststack.h
+#ifndef CSTSTACK_H
+#define CSTSTACK_H
+#define MAX_STACK_SIZE 100
+typedef struct {
+char data[MAX_STACK_SIZE];
+int top;
+} Stack;
+void init(Stack* S) {
+S->top = -1;
+}
+int isEmpty(const Stack* S) {
+return S->top == -1;
+}
+void push(Stack* S, char element) {
+if (S->top < MAX_STACK_SIZE - 1) {
+S->top++;
+S->data[S->top] = element;
+}
+}
+char pop(Stack* S) {
+if (!isEmpty(S)) {
+char element = S->data[S->top];
+S->top--;
+return element;
+}
+return '\0'; // Return null character to indicate an empty stack
+}
+#endif // CSTSTACK_H
+cststack.c
+#include <stdio.h>
+#include <string.h>
+#include "cststack.h" // Include your stack library here
+int main() {
+char inputString[100];
+printf("Enter a string to reverse: ");
+scanf("%s", inputString);
+Stack stack;
+init(&stack);
+// Push each character onto the stack
+for (int i = 0; i < strlen(inputString); i++) {
+push(&stack, inputString[i]);
+}
+printf("Reversed String: ");
+while (!isEmpty(&stack)) {
+printf("%c", pop(&stack));
+}
+printf("\n");
+return 0;
+}
+Q2. Read the data from the file “employee.txt” and sort on names inalphabetical order (use strcmp) using insertion sort or selection sort [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// Structure to represent an employee
+typedef struct {
+char name[100];
+int age;
+// Add other employee attributes here if needed
+} Employee;
+// Function to read employees from a file
+int readEmployees(Employee employees[], const char* filename) {
+FILE* file = fopen(filename, "r");
+if (file == NULL) {
+printf("Failed to open the file.\n");
+exit(1);
+}
+int count = 0;
+while (fscanf(file, "%s %d", employees[count].name, &employees[count].age) != EOF) {
+count++;
+}
+fclose(file);
+return count;
+}
+// Function to compare two employee names for sorting
+int compareNames(const void* a, const void* b) {
+return strcmp(((Employee*)a)->name, ((Employee*)b)->name);
+}
+// Function to perform insertion sort on an array of employees
+void insertionSort(Employee employees[], int n) {
+int i, j;
+Employee key;
+for (i = 1; i < n; i++) {
+key = employees[i];
+j = i - 1;
+while (j >= 0 && strcmp(employees[j].name, key.name) > 0) {
+employees[j + 1] = employees[j];
+j = j - 1;
+}
+employees[j + 1] = key;
+}
+}
+int main() {
+const char* filename = "employee.txt";
+Employee employees[100]; // Assuming a maximum of 100 employees
+int count = readEmployees(employees, filename);
+// Sort the employees array in alphabetical order of names
+insertionSort(employees, count);
+// Display the sorted list of employees
+printf("Sorted List of Employees (Alphabetical Order):\n");
+for (int i = 0; i < count; i++) {
+printf("Name: %s, Age: %d\n", employees[i].name, employees[i].age);
+}
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a linear queue library (st_queue.h) of integers using a staticimplementation of the queue and implementing the operations like init (Q), AddQueue(Q, x) and X=DeleteQueue(Q). Write a programthat includes queuelibrary and calls different queue operations. [10]
+stqueue.h
+#ifndef ST_QUEUE_H
+#define ST_QUEUE_H
+#define MAX_QUEUE_SIZE 100
+typedef struct {
+int data[MAX_QUEUE_SIZE];
+int front;
+int rear;
+} Queue;
+void init(Queue* Q) {
+Q->front = -1;
+Q->rear = -1;
+}
+int isEmpty(const Queue* Q) {
+return Q->front == -1;
+}
+int isFull(const Queue* Q) {
+return (Q->rear + 1) % MAX_QUEUE_SIZE == Q->front;
+}
+void AddQueue(Queue* Q, int x) {
+if (!isFull(Q)) {
+if (isEmpty(Q)) {
+Q->front = 0;
+}
+Q->rear = (Q->rear + 1) % MAX_QUEUE_SIZE;
+Q->data[Q->rear] = x;
+}
+}
+int DeleteQueue(Queue* Q) {
+if (!isEmpty(Q)) {
+int deleted = Q->data[Q->front];
+if (Q->front == Q->rear) {
+// Last element in the queue
+Q->front = -1;
+Q->rear = -1;
+} else {
+Q->front = (Q->front + 1) % MAX_QUEUE_SIZE;
+}
+return deleted;
+}
+return -1; // Return -1 to indicate an empty queue
+}
+#endif // ST_QUEUE_H
+stqueue.c
+#include <stdio.h>
+#include "stqueue.h"
+int main() {
+Queue queue;
+init(&queue);
+// Add elements to the queue
+for (int i = 1; i <= 5; i++) {
+AddQueue(&queue, i * 10);
+printf("Added: %d\n", i * 10);
+}
+// Delete elements from the queue
+while (!isEmpty(&queue)) {
+int deleted = DeleteQueue(&queue);
+printf("Deleted: %d\n", deleted);
+}
+// Check if the queue is empty
+if (isEmpty(&queue)) {
+printf("Queue is empty.\n");
+} else {
+printf("Queue is not empty.\n");
+}
+return 0;
+}
+Q2. Read the data from file 'cities.txt' containing names of cities and their STDcodes. Accept a name of the city from user and use sentinel linear searchalgorithm to check whether the name is present in the file and output the STDcode, otherwise output “city not in the list”. [20]
+#include <stdio.h>
+#include <string.h>
+#define MAX_CITIES 100
+#define MAX_CITY_NAME_LENGTH 50
+// Structure to represent city data
+typedef struct {
+char name[MAX_CITY_NAME_LENGTH];
+int stdCode;
+} City;
+// Function to read city data from a file
+int readCities(City cities[], const char* filename) {
+FILE* file = fopen(filename, "r");
+if (file == NULL) {
+printf("Failed to open the file.\n");
+return 0;
+}
+int count = 0;
+while (fscanf(file, "%s %d", cities[count].name, &cities[count].stdCode) !=EOF){
+count++;
+}
+fclose(file);
+return count;
+}
+// Function to perform sentinel linear search
+int sentinelLinearSearch(const City cities[], int n, const char* target) {
+int i;
+City sentinel;
+strcpy(sentinel.name, target);
+sentinel.stdCode = 0;
+i = 0;
+while (strcmp(cities[i].name, target) != 0) {
+i++;
+}
+if (i < n) {
+return cities[i].stdCode;
+} else {
+return -1; // City not found
+}
+}
+int main() {
+const char* filename = "cities.txt";
+City cities[MAX_CITIES];
+int cityCount = readCities(cities, filename);
+if (cityCount == 0) {
+return 1;
+}
+char cityName[MAX_CITY_NAME_LENGTH];
+printf("Enter the name of the city: ");
+scanf("%s", cityName);
+int stdCode = sentinelLinearSearch(cities, cityCount, cityName);
+if (stdCode != -1) {
+printf("STD Code for %s: %d\n", cityName, stdCode);
+} else {
+printf("%s is not in the list.\n", cityName);
+}
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a priority queue library (PriorityQ.h) of integers using a staticimplementation of the queue and implementing the below operation [10]
+Add an element with its priority into the queue
+Q2. Read the data from file ‘sortedcities.txt’ containing sorted names of citiesand their STD codes. Accept a name of the city from user and use binarysearchalgorithm to check whether the name is present in the file and output the STDcode, otherwise output “city not in the list”. [20]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// Structure to represent a city and its STD code
+typedef struct {
+char name[100];
+int stdCode;
+} City;
+// Function to read data from the file and return the number of cities
+int readCities(City cities[]) {
+FILE *file = fopen("sortedcities.txt", "r");
+if (file == NULL) {
+printf("Failed to open sortedcities.txt.\n");
+exit(1);
+}
+int numCities;
+fscanf(file, "%d", &numCities);
+for (int i = 0; i < numCities; i++) {
+fscanf(file, "%s %d", cities[i].name, &cities[i].stdCode);
+}
+fclose(file);
+return numCities;
+}
+// Binary search function to find a city by name and return its STDcode
+int binarySearch(City cities[], int numCities, char cityName[]) {
+int left = 0;
+int right = numCities - 1;
+while (left <= right) {
+int mid = left + (right - left) / 2;
+int comparison = strcmp(cityName, cities[mid].name);
+if (comparison == 0) {
+return cities[mid].stdCode; // City found
+} else if (comparison < 0) {
+right = mid - 1; // Search in the left half
+} else {
+left = mid + 1; // Search in the right half
+}
+}
+return -1; // City not found
+}
+int main() {
+City cities[100];
+int numCities = readCities(cities);
+char cityName[100];
+printf("Enter the name of the city: ");
+scanf("%s", cityName);
+int stdCode = binarySearch(cities, numCities, cityName);
+if (stdCode != -1) {
+printf("STD Code for %s is %d\n", cityName, stdCode);
+} else {
+printf("%s is not in the list\n", cityName);
+}
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a circular queue library (cir_queue.h) of integers using a static(linked list) implementation of the queue and implementing the operations likeinit (Q), AddQueue(Q, x) and X=peek (Q)). Write a menu driven programthat
+includes queue library and calls different queue operations. [10]Q2. Read the data from the file “employee.txt” and sort on names inalphabetical order (use strcmp) using insertion sort or selection sort. [20]
+Q3. Viva [5]
+Q1. Read the data from the ‘employee.txt’ file and sort on age using Count sort
+and write the sorted data to another file 'sortedemponage.txt'. [10]
+Q2. Write a program to convert an infix expressionof the form(a*(b+c)*((d-a)/b)) into its equivalent postfix notation. Consider usual precedence’s ofoperators. Use stack library of stack of characters using static implementation[20]#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_SIZE 100
+// Structure to represent a stack
+typedef struct {
+char items[MAX_SIZE];
+int top;
+} Stack;
+// Function to initialize the stack
+void initialize(Stack* stack) {
+stack->top = -1;
+}
+// Function to push an element onto the stack
+void push(Stack* stack, char item) {
+if (stack->top >= MAX_SIZE - 1) {
+printf("Stack overflow.\n");
+exit(1);
+}
+stack->items[++stack->top] = item;
+}
+// Function to pop an element from the stack
+char pop(Stack* stack) {
+if (stack->top == -1) {
+printf("Stack underflow.\n");
+exit(1);
+}
+return stack->items[stack->top--];
+}
+// Function to check if a character is an operator (+, -, *, /)
+int isOperator(char ch) {
+return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
+}
+// Function to return the precedence of an operator
+int getPrecedence(char ch) {
+if (ch == '+' || ch == '-') {
+return 1;
+} else if (ch == '*' || ch == '/') {
+return 2;
+}
+return 0;
+}
+// Function to convert infix expression to postfix notation
+void infixToPostfix(char infix[], char postfix[]) {
+Stack stack;
+initialize(&stack);
+int infixLen = strlen(infix);
+int postfixIndex = 0;
+for (int i = 0; i < infixLen; i++) {
+char ch = infix[i];
+if (isalnum(ch)) {
+// Operand - directly append to the postfix expression
+postfix[postfixIndex++] = ch;
+} else if (ch == '(') {
+// Left parenthesis - push onto the stack
+push(&stack, ch);
+} else if (ch == ')') {
+// Right parenthesis - pop and append operators from the stack
+while (stack.top != -1 && stack.items[stack.top] != '(') {
+postfix[postfixIndex++] = pop(&stack);
+}
+// Pop the left parenthesis
+if (stack.top != -1) {
+pop(&stack);
+}
+} else if (isOperator(ch)) {
+// Operator - pop and append operators from the stack with higher precedencewhile (stack.top != -1 && stack.items[stack.top] != '(' &&getPrecedence(stack.items[stack.top]) >= getPrecedence(ch)) {
+postfix[postfixIndex++] = pop(&stack);
+}
+// Push the current operator onto the stack
+push(&stack, ch);
+}
+}
+// Pop any remaining operators from the stack and append to the postfixexpression
+while (stack.top != -1) {
+postfix[postfixIndex++] = pop(&stack);
+}
+// Null-terminate the postfix expression
+postfix[postfixIndex] = '\0';
+}
+int main() {
+char infix[] = "(a*(b+c)*((d-a)/b))";
+char postfix[MAX_SIZE];
+infixToPostfix(infix, postfix);
+printf("Infix Expression: %s\n", infix);
+printf("Postfix Expression: %s\n", postfix);
+return 0; }Q3 Viva [5]
+Q1. Implement a stack library (ststack.h) of integers using a staticimplementation of the stack and implementing the operations like init(S), S=Push(S,x) and isEmpty(S). Write a driver program that includes stacklibraryand calls different stack operations. [10]
+Q2. There are lists where insertion should ensure the ordering of data elements. Since the elements are in ascending order the search can terminate once equal
+or greater element is found. Implement a singly linked list of orderedintegers(ascending/descending) with insert, search, and display operations. [20]
+#include <stdio.h>
+#include <stdlib.h>
+// Structure to represent a node in the linked list
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newNode->data = data;
+newNode->next = NULL;
+return newNode;
+}
+// Function to insert an element in ascending order
+Node* insertOrdered(Node* head, int data) {
+Node* newNode = createNode(data);
+if (head == NULL || data <= head->data) {
+newNode->next = head;
+return newNode;
+}
+Node* current = head;
+while (current->next != NULL && data > current->next- >data) {
+current = current->next;
+}
+newNode->next = current->next;
+current->next = newNode;
+return head;
+}
+// Function to search for an element in the linked list
+int searchElement(Node* head, int target) {
+Node* current = head;
+while (current != NULL) {
+if (current->data == target) {
+return 1; // Element found
+} else if (current->data > target) {
+return 0; // Element not found (greater element
+encountered)
+}
+current = current->next;
+}
+return 0; // Element not found
+}
+// Function to display the ordered linked list
+void displayList(Node* head) {
+Node* current = head;
+while (current != NULL) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+int main() {
+Node* head = NULL;
+int choice;
+int data;
+printf("Enter the order of the list (1 for ascending, 2 for
+descending): ");
+scanf("%d", &choice);
+while (1) {
+printf("Enter an integer (-1 to exit): ");
+scanf("%d", &data);
+if (data == -1) {
+break;
+}
+if (choice == 1) {
+head = insertOrdered(head, data); // Insert in ascending
+order
+} else if (choice == 2) {
+// You can implement descending order insertion here
+}
+}
+printf("Ordered Linked List:\n");
+displayList(head);
+int target;
+printf("Enter an element to search: ");
+scanf("%d", &target);
+if (searchElement(head, target)) {
+printf("Element %d found in the list.\n", target);
+} else {
+printf("Element %d not found in the list.\n", target);
+}
+return 0;
+}
+Q3. Viva [5]
+Q1. Read the data from the file and sort on names in alphabetical order (usestrcmp) using Merge sort and write the sorted data to another file'sortedemponname.txt' [10]
+Q2. Write a program that adds two single variable polynomials. Eachpolynomial should be represented as a list with linked list implementation.[20]
+#include <stdio.h>
+#include <stdlib.h>
+// Structure to represent a term in the polynomial
+typedef struct Term {
+int coefficient;
+int exponent;
+struct Term* next;
+} Term;
+// Function to create a new term
+Term* createTerm(int coefficient, int exponent) {
+Term* newTerm = (Term*)malloc(sizeof(Term));
+if (newTerm == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newTerm->coefficient = coefficient;
+newTerm->exponent = exponent;
+newTerm->next = NULL;
+return newTerm;
+}
+// Function to insert a new term at the end of a polynomial
+void insertTerm(Term** head, int coefficient, int exponent) {
+Term* newTerm = createTerm(coefficient, exponent);
+if (*head == NULL) {
+*head = newTerm;
+} else {
+Term* current = *head;
+while (current->next != NULL) {
+current = current->next;
+}
+current->next = newTerm;
+}
+}
+// Function to add two polynomials and return the result
+Term* addPolynomials(Term* poly1, Term* poly2) {
+Term* result = NULL;
+while (poly1 != NULL || poly2 != NULL) {
+int coefficient1 = (poly1 != NULL) ? poly1->coefficient : 0;
+int exponent1 = (poly1 != NULL) ? poly1->exponent : 0;
+int coefficient2 = (poly2 != NULL) ? poly2->coefficient : 0;
+int exponent2 = (poly2 != NULL) ? poly2->exponent : 0;
+int sumCoefficient = coefficient1 + coefficient2;
+int sumExponent = exponent1; // Exponents should be the same for addition
+insertTerm(&result, sumCoefficient, sumExponent);
+if (poly1 != NULL) poly1 = poly1->next;
+if (poly2 != NULL) poly2 = poly2->next;
+}
+return result;
+}
+// Function to display a polynomial
+void displayPolynomial(Term* head) {
+Term* current = head;
+while (current != NULL) {
+printf("%dx^%d", current->coefficient, current->exponent);
+current = current->next;
+if (current != NULL) {
+printf(" + ");
+}
+}
+printf("\n");
+}
+int main() {
+Term* poly1 = NULL;
+Term* poly2 = NULL;
+// Input the first polynomial
+insertTerm(&poly1, 5, 3);
+insertTerm(&poly1, -2, 2);
+insertTerm(&poly1, 7, 0);
+// Input the second polynomial
+insertTerm(&poly2, 3, 2);
+insertTerm(&poly2, 4, 1);
+insertTerm(&poly2, -1, 0);
+printf("Polynomial 1: ");
+displayPolynomial(poly1);
+printf("Polynomial 2: ");
+displayPolynomial(poly2);
+Term* result = addPolynomials(poly1, poly2);
+printf("Resulting Polynomial: ");
+displayPolynomial(result);
+return 0;
+}
+Q3. Viva [5]
+Q1. Implement a stack library (ststack.h) of integers using a staticimplementation of the stack and implementing the above six operations. Writea driver program that includes stack library and calls different stack operations. [10]
+Q2. Read the data from the ‘employee.txt’ file and sort on age using Merge sort
+or Quick sort and write the sorted data to another file 'sortedemponage.txt'. #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// Structure to represent an employee
+typedef struct {
+char name[100];
+int age;
+} Employee;
+// Function to merge two subarrays during the merge step of Merge Sort
+void merge(Employee arr[], int left, int mid, int right) {
+int n1 = mid - left + 1;
+int n2 = right - mid;
+Employee* L = (Employee*)malloc(n1 * sizeof(Employee));
+Employee* R = (Employee*)malloc(n2 * sizeof(Employee));
+for (int i = 0; i < n1; i++) {
+L[i] = arr[left + i];
+}
+for (int j = 0; j < n2; j++) {
+R[j] = arr[mid + 1 + j];
+}
+int i = 0, j = 0, k = left;
+while (i < n1 && j < n2) {
+if (L[i].age <= R[j].age) {
+arr[k] = L[i];
+i++;
+} else {
+arr[k] = R[j];
+j++;
+}
+k++;
+}
+while (i < n1) {
+arr[k] = L[i];
+i++;
+k++;
+}
+while (j < n2) {
+arr[k] = R[j];
+j++;
+k++;
+}
+free(L);
+free(R);
+}
+// Function to perform the merge sort
+void mergeSort(Employee arr[], int left, int right) {
+if (left < right) {
+int mid = left + (right - left) / 2;
+mergeSort(arr, left, mid);
+mergeSort(arr, mid + 1, right);
+merge(arr, left, mid, right);
+}
+}
+int main() {
+const char* inputFilename = "employee.txt";
+const char* outputFilename = "sortedemponage.txt";
+FILE* inputFile = fopen(inputFilename, "r");
+if (inputFile == NULL) {
+printf("Failed to open %s.\n", inputFilename);
+return 1;
+}
+int numEmployees;
+fscanf(inputFile, "%d", &numEmployees);
+Employee* employees = (Employee*)malloc(numEmployees *
+sizeof(Employee));
+for (int i = 0; i < numEmployees; i++) {
+fscanf(inputFile, "%s %d", employees[i].name, &employees[i].age);
+}
+fclose(inputFile);
+// Sort the employees based on age using Merge Sort
+mergeSort(employees, 0, numEmployees - 1);
+// Write the sorted data to 'sortedemponage.txt' FILE* outputFile = fopen(outputFilename, "w");
+if (outputFile == NULL) {
+printf("Failed to open %s.\n", outputFilename);
+free(employees);
+return 1;
+}
+fprintf(outputFile, "%d\n", numEmployees);
+for (int i = 0; i < numEmployees; i++) {
+fprintf(outputFile, "%s %d\n", employees[i].name, employees[i].age);
+}
+fclose(outputFile);
+free(employees);
+printf("Sorted data written to %s.\n", outputFilename);
+return 0;
+}
+[20]
+Q3. Viva [5]
+Q1. Implement a stack library (ststack.h) of integers using a staticimplementation of the stack and implementing the operations like init(S), S=push(S), and X=peek(S). Write a driver program that includes stacklibraryand calls different stack operations. [10]Q2. There are lists where new elements are always appended at the endof thelist. The list can be implemented as a circular list with the external pointerpointing to the last element of the list. Implement singly linked circular list ofintegers with append and display operations. The operation append(L, n), appends to the end of the list, n integers accepted from user. [20]
+#include <stdio.h>
+#include <stdlib.h>
+// Define the structure for a node in the circular list
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newNode->data = data;
+newNode->next = NULL;
+return newNode;
+}
+// Function to append 'n' integers to the circular list
+Node* appendN(Node* last, int n) {
+Node* current = last;
+for (int i = 0; i < n; i++) {
+int data;
+printf("Enter data: ");
+scanf("%d", &data);
+Node* newNode = createNode(data);
+newNode->next = current->next;
+current->next = newNode;
+current = newNode;
+}
+return current;
+}
+// Function to display the circular list
+void displayList(Node* last) {
+if (last == NULL) {
+printf("List is empty.\n");
+return;
+}
+Node* current = last->next;
+do {
+printf("%d -> ", current->data);
+current = current->next;
+} while (current != last->next);
+printf("\n");
+}
+int main() {
+Node* last = NULL;
+int n;
+printf("Enter the number of integers to append: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("Invalid input.\n");
+return 1;
+}
+// Create a dummy node to start the circular list
+last = createNode(-1);
+last->next = last;
+// Append 'n' integers to the circular list
+last = appendN(last, n);
+printf("Circular Linked List:\n");
+displayList(last);
+return 0; }Q3. Viva [5]
+Q1. Read the data from the file “employee.txt” and sort on names inalphabetical order (use strcmp) using bubble sort [10]
+Q2. Write a program that merges two ordered linked lists into third newlist. When two lists are merged the data in the resulting list are also ordered. Thetwo original lists should be left unchanged. That is merged list should benewone. Use linked implementation. [20]
+#include <stdio.h>
+#include <stdlib.h>
+// Define a structure for a node in the linked list
+typedef struct Node {
+int data;
+struct Node* next;
+} Node;
+// Function to create a new node
+Node* createNode(int data) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+if (newNode == NULL) {
+printf("Memory allocation failed.\n");
+exit(1);
+}
+newNode->data = data;
+newNode->next = NULL;
+return newNode;
+}
+// Function to insert a new node at the end of a linked list
+Node* insertEnd(Node* head, int data) {
+Node* newNode = createNode(data);
+if (head == NULL) {
+return newNode;
+}
+Node* current = head;
+while (current->next != NULL) {
+current = current->next;
+}
+current->next = newNode;
+return head;
+}
+// Function to merge two ordered linked lists into a new ordered list
+Node* mergeOrderedLists(Node* list1, Node* list2) {
+Node* mergedList = NULL;
+Node* current1 = list1;
+Node* current2 = list2;
+while (current1 != NULL && current2 != NULL) {
+if (current1->data < current2->data) {
+mergedList = insertEnd(mergedList, current1->data);
+current1 = current1->next;
+} else {
+mergedList = insertEnd(mergedList, current2->data);
+current2 = current2->next;
+}
+}
+// Append remaining elements from list1, if any
+while (current1 != NULL) {
+mergedList = insertEnd(mergedList, current1->data);
+current1 = current1->next;
+}
+// Append remaining elements from list2, if any
+while (current2 != NULL) {
+mergedList = insertEnd(mergedList, current2->data);
+current2 = current2->next;
+}
+return mergedList;
+}
+// Function to display a linked list
+void displayList(Node* head) {
+Node* current = head;
+while (current != NULL) {
+printf("%d -> ", current->data);
+current = current->next;
+}
+printf("NULL\n");
+}
+int main() {
+Node* list1 = NULL;
+Node* list2 = NULL;
+// Insert elements into the first ordered list
+list1 = insertEnd(list1, 1);
+list1 = insertEnd(list1, 3);
+list1 = insertEnd(list1, 5);
+// Insert elements into the second ordered list
+list2 = insertEnd(list2, 2);
+list2 = insertEnd(list2, 4);
+list2 = insertEnd(list2, 6);
+printf("List 1: ");
+displayList(list1);
+printf("List 2: ");
+displayList(list2);
+Node* mergedList = mergeOrderedLists(list1, list2);
+printf("Merged List: ");
+displayList(mergedList); return 0; }Q3. Viva [5]
